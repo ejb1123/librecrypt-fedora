@@ -6,7 +6,6 @@ Summary:	Peer-to-peer, decentralized and open source file sync
 License:	GPL3
 URL:		https://github.com/Librevault/librevault
 Source0:	librevault-v%{version}.tar.gz
-Patch0:     memory.patch
 
 BuildRequires:	cmake
 %if 0%{?fedora}
@@ -57,7 +56,6 @@ Librevault is an open-source peer-to-peer file synchronization program, designed
 %prep
 
 %setup
-%patch0
 mkdir build
 cd build
 %if 0%{?suse_version} == 1315 && 0%{?sle_version} == 120100
