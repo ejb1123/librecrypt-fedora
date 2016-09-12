@@ -76,7 +76,7 @@ CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE=Release \
 
 %build
 cd build
-CC=gcc CXX=g++ cmake --build .
+CC=gcc CXX=g++ cmake --build . -- -j $(nproc)
 
 %install
 rm -rf %{buildroot}
