@@ -77,7 +77,6 @@ CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE=Release \
 %endif
 
 %build
-cat /home/abuild/rpmbuild/BUILD/librevault/contrib/rabin/main.cpp
 cd build
 CC=gcc CXX=g++ cmake --build .
 
