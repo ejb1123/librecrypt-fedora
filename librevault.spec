@@ -55,7 +55,7 @@ Librevault is an open-source peer-to-peer file synchronization program, designed
 
 %prep
 
-%setup
+%setup -n %{name}
 mkdir build
 cd build
 %if 0%{?suse_version} == 1315 && 0%{?sle_version} == 120100
