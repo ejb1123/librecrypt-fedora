@@ -40,7 +40,6 @@ CC=gcc CXX=g++ cmake -DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=/usr \
 	-DWITH_TESTS=OFF \
 	-DWITH_EXAMPLE=OFF ..
-%endif
 
 %build
 cd build
