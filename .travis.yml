@@ -1,0 +1,9 @@
+sudo: required
+
+language: c++
+
+before_install:
+- docker build -f Travis_Dockerfile -t Travis_Dockerfile:v1
+- docker run Travis_Dockerfile:v1
+services:
+  - docker
