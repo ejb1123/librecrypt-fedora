@@ -1,10 +1,10 @@
 FROM fedora:24
 RUN dnf install -y gcc gcc-c++ rpm-build rpmdevtools dnf-plugins-core make cpp git
 RUN mkdir /opt/build-dir
-VOLUME /opt/build-dir
+#VOLUME /opt/build-dir
 WORKDIR /opt/build-dir
 RUN git clone https://github.com/Librevault/librevault.git && echo 'ls -a librevault' && ls librevault
-RUN cd /opt/build-dir/librevault && ls . && echo 'up dir' && ls ..
+RUN cd /opt/build-dir/ && ls . && echo 'up dir' && ls .. && echo 'ls librevault' && ls librevault
 RUN git submodule update --init
 RUN mkdir docker-build
 COPY ./ docker-build/
