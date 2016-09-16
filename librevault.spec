@@ -48,7 +48,7 @@ CC=gcc CXX=g++ cmake --build . -- -j $(nproc)
 %install
 rm -rf %{buildroot}
 cd build
-make %{?_smp_mflags} DESTDIR="%{buildroot}" install
+make DESTDIR="%{buildroot}" install
 
 %files
 %{_bindir}/*
