@@ -1,9 +1,12 @@
 sudo: required
 
 language: c++
-
+os:
+  - linux
+  - osx
 before_install:
-- docker build -f Travis_Dockerfile -t travis_dockerfile:v1 .
-- docker run travis_dockerfile:v1
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build -f Travis_Dockerfile -t travis_dockerfile:v1 . ; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker run travis_dockerfile:v1 ; fi
 services:
   - docker
