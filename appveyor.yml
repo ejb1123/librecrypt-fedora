@@ -1,10 +1,9 @@
 init:
-git clone https://github.com/librecrypt/librecrypt.git
-cd librecrypt
+- git clone https://github.com/librecrypt/librecrypt.git
+- cd librecrypt
 build:
-cd librecrypt
-mkdir build
-cd build
-cmake ..
-cmake --build .
-package
+- cd librecrypt
+- mkdir build
+- cd build
+- cmake ..
+- cmake --build .
