@@ -4,6 +4,7 @@ RUN mkdir /opt/build-dir
 VOLUME /opt/build-dir
 WORKDIR /opt/build-dir
 git clone https://github.com/Librevault/librevault.git
+git submodule update --init
 mkdir docker-build
 COPY ./ docker-build/
 ENTRYPOINT docker-build/makerpm.sh
