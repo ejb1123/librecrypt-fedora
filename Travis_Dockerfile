@@ -1,0 +1,9 @@
+FROM fedora:24
+RUN dnf install -y gcc gcc-c++ rpm-build rpmdevtools dnf-plugins-core make cpp git
+RUN mkdir /opt/build-dir
+VOLUME /opt/build-dir
+WORKDIR /opt/build-dir
+git clone https://github.com/Librevault/librevault.git
+mkdir docker-build
+COPY ./ docker-build/
+ENTRYPOINT docker-build/makerpm.sh
