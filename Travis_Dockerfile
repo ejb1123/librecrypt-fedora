@@ -3,7 +3,7 @@ RUN dnf install -y gcc gcc-c++ rpm-build rpmdevtools dnf-plugins-core make cpp g
 RUN mkdir /opt/build-dir
 VOLUME /opt/build-dir
 WORKDIR /opt/build-dir
-RUN git clone https://github.com/Librevault/librevault.git && ls && echo 'ls .' && ls .. && echo 'ls ..'
+RUN git clone https://github.com/Librevault/librevault.git && echo 'ls -a librevault' && ls librevault
 WORKDIR /opt/build-dir/librevault
 RUN cd /opt/build-dir/librevault && ls . && echo 'up dir' && ls ..
 RUN git submodule update --init
