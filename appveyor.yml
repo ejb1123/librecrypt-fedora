@@ -1,2 +1,2 @@
 init:
-- git clone https://github.com/librevault/librevault.git
+- git clone https://github.com/librevault/librevault.git librevault
