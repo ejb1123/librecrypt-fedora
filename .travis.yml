@@ -4,6 +4,6 @@ language: c++
 
 before_install:
 - docker build -f Travis_Dockerfile -t travis_dockerfile:v1 .
-- docker run Travis_Dockerfile:v1
+- docker run travis_dockerfile:v1
 services:
   - docker
