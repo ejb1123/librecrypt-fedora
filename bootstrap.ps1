@@ -1,7 +1,18 @@
 mkdir -force tmp
 #$hh = Get-WmiObject -Class Win32_Processor -ComputerName . | Select-Object -Property NumberOfLogicalProcessors
 cd tmp
-Set-VsCmd -version 2015
+
+#Set environment variables for Visual Studio Command Prompt
+pushd "$env:VS140COMNTOOLS"
+cmd /c "vsvars32.bat&set" |
+foreach {
+  if ($_ -match "=") {
+    $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
+  }
+}
+popd
+write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
+
 Import-Module BitsTransfer
 if(!(Test-Path ".\jom.zip")) {
   Start-BitsTransfer -source 'http://download.qt.io/official_releases/jom/jom.zip' -Destination "jom.zip"
@@ -45,36 +56,3 @@ mkdir build
 cd build
 #cmake -DBOOST_ROOT="C:\Libraries\boost_1_59_0" -DBOOST_LIBRARYDIR="C:\Libraries\boost_1_59_0\lib32-msvc-14.0" -DCMAKE_PREFIX_PATH="C:\Qt\5.7\msvc2015\lib\cmake\Qt5" -DUSE_BUNDLED_SQLITE3=TRUE -DPROTOBUF_INCLUDE_DIR="C:\libraries\protoc-3.0.0\cmake\build\release" -DPROTOBUF_LIBRARY=C:\libraries\protoc-3.0.0\cmake\build\release -DCRYPTOPP_ROOT_DIR="C:\Program Files (x86)\cryptopp\" -DCRYPTOPP_LIBRARY="C:\Program Files (x86)\cryptopp\lib" ..
 #cmake --build .
-function Set-VsCmd
-{
-    param(
-        [parameter(Mandatory=$true, HelpMessage="Enter VS version as 2010, 2012, 2013, 2015")]
-        [ValidateSet(2010,2012,2013,2015)]
-        [int]$version
-    )
-    $VS_VERSION = @{ 2010 = "10.0"; 2012 = "11.0"; 2013 = "12.0"; 2015 = "14.0" }
-    if($version -eq 2015)
-    {
-        $targetDir = "c:\Program Files (x86)\Microsoft Visual Studio $($VS_VERSION[$version])\Common7\Tools"
-        $vcvars = "VsMSBuildCmd.bat"
-    }
-    else
-    {
-        $targetDir = "c:\Program Files (x86)\Microsoft Visual Studio $($VS_VERSION[$version])\VC"
-        $vcvars = "vcvarsall.bat"
-    }
-  
-    if (!(Test-Path (Join-Path $targetDir $vcvars))) {
-        "Error: Visual Studio $version not installed"
-        return
-    }
-    pushd $targetDir
-    cmd /c $vcvars + "&set" |
-    foreach {
-      if ($_ -match "(.*?)=(.*)") {
-        Set-Item -force -path "ENV:\$($matches[1])" -value "$($matches[2])"
-      }
-    }
-    popd
-    write-host "`nVisual Studio $version Command Prompt variables set." -ForegroundColor Yellow
-}
