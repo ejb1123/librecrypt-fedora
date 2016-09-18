@@ -42,7 +42,7 @@ cd build
 mkdir Release
 cd  Release
 cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release ../..
-cmake --build . -- /j 16
+jom -J 16
 jom install
 }
 function compilemain(){
