@@ -47,6 +47,22 @@ popd
 popd
 popd
 }
+function compilecryptopp(){
+appveyor DownloadFile http://downloads.sourceforge.net/project/cryptopp/cryptopp/5.6.4/cryptopp564.zip
+7z.exe x -ocryptopp564 cryptopp564.zip
+pushd cryptopp564
+mkdir build
+pushd build
+mkdir release
+pushd release
+cmake -G "NMake Makefiles JOM" -DCMAKE_RELEASE_TYPE=release ..\..
+cmake --build . -- -j 16
+cmake --build . -- test
+nmake install
+popd
+popd
+popd
+}
 function compilemain(){
 
 git clone https://github.com/librevault/librevault.git
@@ -71,5 +87,6 @@ write-host '`nVisual Studio 2015 Command Prompt variables set.' -ForegroundColor
 }
 setupVSudio
 compileJOM
+compilecryptopp
 compileProtobuf
 compilemain
