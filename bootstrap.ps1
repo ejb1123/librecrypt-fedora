@@ -54,14 +54,14 @@ pushd librevault
 git submodule update --init
 mkdir build
 pushd build
-cmake -DBOOST_ROOT="C:\Libraries\boost_1_59_0"`
- -DBOOST_LIBRARYDIR="C:\Libraries\boost_1_59_0\lib32-msvc-14.0"`
- -DCMAKE_PREFIX_PATH="C:\Qt\5.7\msvc2015\lib\cmake\Qt5"`
+cmake -DBOOST_ROOT='C:\Libraries\boost_1_59_0'`
+ -DBOOST_LIBRARYDIR='C:\Libraries\boost_1_59_0\lib32-msvc-14.0'`
+ -DCMAKE_PREFIX_PATH='C:\Qt\5.7\msvc2015\lib\cmake\Qt5'`
  -DUSE_BUNDLED_SQLITE3="TRUE"`
- -DPROTOBUF_INCLUDE_DIR="C:\libraries\protoc-3.0.0\cmake\build\release"`
- -DPROTOBUF_LIBRARY="C:\libraries\protoc-3.0.0\cmake\build\release"`
- -DCRYPTOPP_ROOT_DIR="C:\Program Files (x86)\cryptopp\"`
- -DCRYPTOPP_LIBRARY="C:\Program Files (x86)\cryptopp\lib" ..
+ -DPROTOBUF_INCLUDE_DIR='C:\libraries\protoc-3.0.0\cmake\build\release'`
+ -DPROTOBUF_LIBRARY='C:\libraries\protoc-3.0.0\cmake\build\release'`
+ -DCRYPTOPP_ROOT_DIR='C:\Program Files (x86)\cryptopp\'`
+ -DCRYPTOPP_LIBRARY='C:\Program Files (x86)\cryptopp\lib' ..
 #cmake --build .
 }
 function setupVSudio(){
