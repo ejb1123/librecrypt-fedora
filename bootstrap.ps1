@@ -74,7 +74,7 @@ foreach {
   }
 }
 popd
-write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
+write-host "Visual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
 }
 #setupVSudio
 compileJOM
