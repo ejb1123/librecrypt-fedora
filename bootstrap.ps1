@@ -6,8 +6,7 @@ cd tmp
 
 Import-Module BitsTransfer
 
-compileJOM
-compileProtobuf
+
 function compileQT(){
   if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0.7z")) {
   Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/archive/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.7z" -Destination "qt-everywhere-opensource-src-5.7.0.7z"
@@ -68,3 +67,5 @@ foreach {
 popd
 write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor Yellow
 }
+compileJOM
+compileProtobuf
