@@ -1,7 +1,7 @@
 mkdir -force tmp
 #$hh = Get-WmiObject -Class Win32_Processor -ComputerName . | Select-Object -Property NumberOfLogicalProcessors
 cd tmp
-Set-VsCmd()
+Set-VsCmd -version 2015
 Import-Module BitsTransfer
 if(!(Test-Path ".\jom.zip")) {
   Start-BitsTransfer -source 'http://download.qt.io/official_releases/jom/jom.zip' -Destination "jom.zip"
