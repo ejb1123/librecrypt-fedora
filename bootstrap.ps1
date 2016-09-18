@@ -34,25 +34,34 @@ $env:Path += ";"+ $(Resolve-Path .\jom\)
 function compileProtobuf(){
 $WebClient = New-Object System.Net.WebClient
 $WebClient.DownloadFile("https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip","$pwd\protobuf-cpp-3.0.0.zip")
-#Start-BitsTransfer -source 'https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip' -Destination "protobuf-cpp-3.0.0.zip"
 & 7z.exe x protobuf-cpp-3.0.0.zip
-cd protobuf-3.0.0\cmake
+pushd protobuf-3.0.0\cmake
 mkdir build
-cd build
+pushd build
 mkdir Release
-cd  Release
+pushd  Release
 cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release ../..
 jom -J 16
 jom install
+popd
+popd
+popd
 }
 function compilemain(){
-cd ..
+
 git clone https://github.com/librevault/librevault.git
-cd librevault
+pushd librevault
 git submodule update --init
 mkdir build
-cd build
-#cmake -DBOOST_ROOT="C:\Libraries\boost_1_59_0" -DBOOST_LIBRARYDIR="C:\Libraries\boost_1_59_0\lib32-msvc-14.0" -DCMAKE_PREFIX_PATH="C:\Qt\5.7\msvc2015\lib\cmake\Qt5" -DUSE_BUNDLED_SQLITE3=TRUE -DPROTOBUF_INCLUDE_DIR="C:\libraries\protoc-3.0.0\cmake\build\release" -DPROTOBUF_LIBRARY=C:\libraries\protoc-3.0.0\cmake\build\release -DCRYPTOPP_ROOT_DIR="C:\Program Files (x86)\cryptopp\" -DCRYPTOPP_LIBRARY="C:\Program Files (x86)\cryptopp\lib" ..
+pushd build
+cmake -DBOOST_ROOT="C:\Libraries\boost_1_59_0"`
+ -DBOOST_LIBRARYDIR="C:\Libraries\boost_1_59_0\lib32-msvc-14.0"`
+ -DCMAKE_PREFIX_PATH="C:\Qt\5.7\msvc2015\lib\cmake\Qt5"`
+ -DUSE_BUNDLED_SQLITE3="TRUE"`
+ -DPROTOBUF_INCLUDE_DIR="C:\libraries\protoc-3.0.0\cmake\build\release"`
+ -DPROTOBUF_LIBRARY="C:\libraries\protoc-3.0.0\cmake\build\release"`
+ -DCRYPTOPP_ROOT_DIR="C:\Program Files (x86)\cryptopp\"`
+ -DCRYPTOPP_LIBRARY="C:\Program Files (x86)\cryptopp\lib" ..
 #cmake --build .
 }
 function setupVSudio(){
@@ -70,3 +79,4 @@ write-host "`nVisual Studio 2015 Command Prompt variables set." -ForegroundColor
 setupVSudio
 compileJOM
 compileProtobuf
+compilemain
