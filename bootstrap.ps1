@@ -12,7 +12,7 @@ if(!(Test-Path ".\jom")) {
 $env:Path += ";"+ $(Resolve-Path .\jom\)
 
 Start-BitsTransfer -source 'https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip' -Destination "$PSScriptRoot\tmp\protobuf-cpp-3.0.0.zip"
-7z.exe x protobuf-cpp-3.0.0.zip
+& 7z.exe x protobuf-cpp-3.0.0.zip
 cd protobuf-3.0.0\cmake
 mkdir build
 cd build
