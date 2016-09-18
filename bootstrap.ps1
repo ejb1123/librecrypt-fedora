@@ -1,5 +1,5 @@
 mkdir -force tmp
-$hh = Get-WmiObject -Class Win32_Processor -ComputerName . | Select-Object -Property NumberOfLogicalProcessors
+#$hh = Get-WmiObject -Class Win32_Processor -ComputerName . | Select-Object -Property NumberOfLogicalProcessors
 cd tmp
 Import-Module BitsTransfer
 if(!(Test-Path ".\jom.zip")) {
@@ -19,7 +19,7 @@ cd build
 mkdir Release
 cd  Release
 cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release ../..
-cmake --build . -- /j $hh
+cmake --build . -- /j 16
 jom install
 
 if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0.7z")) {
@@ -32,7 +32,7 @@ if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0")) {
 cd qt-everywhere-opensource-src-5.7.0
 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 configure.bat -opensource -platform win32-msvc2015 -release -confirm-license -prefix $PWD/qtbase
-jom -j$hh
+jom -j 16
 
 cd ..
 git clone https://github.com/librevault/librevault.git
