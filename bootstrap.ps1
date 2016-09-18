@@ -32,7 +32,7 @@ if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0")) {
 }
 cd qt-everywhere-opensource-src-5.7.0
 "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
-configure.bat -opensource -platform win32-msvc2015 -release -confirm-license -prefix $PWD/qtbase
+& .\configure.bat -opensource -platform win32-msvc2015 -release -confirm-license -prefix $PWD/qtbase
 jom -j 16
 
 Start-BitsTransfer -source 'https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip' -Destination "protobuf-cpp-3.0.0.zip"
