@@ -3,7 +3,7 @@ mkdir -force tmp
 cd tmp
 Import-Module BitsTransfer
 if(!(Test-Path ".\jom.zip")) {
-  Start-BitsTransfer -source 'http://download.qt.io/official_releases/jom/jom.zip' -Destination "$PSScriptRoot\tmp\jom.zip"
+  Start-BitsTransfer -source 'http://download.qt.io/official_releases/jom/jom.zip' -Destination "jom.zip"
   & 7z x jom.zip -ojom
 }
 if(!(Test-Path ".\jom")) {
@@ -11,7 +11,7 @@ if(!(Test-Path ".\jom")) {
 }
 $env:Path += ";"+ $(Resolve-Path .\jom\)
 
-Start-BitsTransfer -source 'https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip' -Destination "$PSScriptRoot\tmp\protobuf-cpp-3.0.0.zip"
+Start-BitsTransfer -source 'https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip' -Destination "protobuf-cpp-3.0.0.zip"
 & 7z.exe x protobuf-cpp-3.0.0.zip
 cd protobuf-3.0.0\cmake
 mkdir build
@@ -23,7 +23,7 @@ cmake --build . -- /j 16
 jom install
 
 if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0.7z")) {
-  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/archive/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.7z" -Destination "$PSScriptRoot\tmp\qt-everywhere-opensource-src-5.7.0.7z"
+  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/archive/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.7z" -Destination "qt-everywhere-opensource-src-5.7.0.7z"
   & 7z x qt-everywhere-opensource-src-5.7.0.7z
 }
 if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0")) {
