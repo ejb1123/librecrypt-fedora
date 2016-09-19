@@ -1,12 +1,9 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
-ls .
-ls ..
-ls /opt
-ls /opt/buid-dir
 rpmdev-setuptree
+tar -czvf librevault-v0.1.18.10.tar.gz /opt/build-dir
 cp librevault.spec ~/rpmbuild/SPECS/
-cp memory.patch librevault-v0.1.18.9.tar.gz ~/rpmbuild/SOURCES/
+cp memory.patch librevault-v0.1.18.10.tar.gz ~/rpmbuild/SOURCES/
 echo -e "%_topdir %(echo $HOME)/rpmbuild\n%__make /usr/bin/make -j$(echo "$(nproc) + $(nproc)/2" | bc)" > ~/.rpmmacros
 cd ~/rpmbuild/SPECS/
 dnf copr enable -y ejb1123/protobuf
