@@ -5,7 +5,7 @@ cd tmp
 
 
 Import-Module BitsTransfer
-
+$sparkledir=""
 
 function compileQT(){
   if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0.7z")) {
@@ -37,6 +37,7 @@ $WebClient.DownloadFile("https://github.com/vslavik/winsparkle/releases/download
 & 7z x WinSparkle-0.5.2-src.7z
 pushd WinSparkle-0.5.2-src
 msbuild WinSparkle-2015.sln /property:Configuration=Release /property:Platform=x64 /m
+$sparkledir=$(pwd)
 popd
 }
 function compileProtobuf(){
@@ -97,4 +98,5 @@ setupVSudio
 compileJOM
 compilecryptopp
 compileProtobuf
+compilesparkle
 compilemain
