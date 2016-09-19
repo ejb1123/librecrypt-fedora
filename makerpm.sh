@@ -13,3 +13,4 @@ dnf copr enable -y ejb1123/protobuf
 dnf builddep -y librevault.spec
 rpmbuild -ba librevault.spec
 cp -r ~/rpmbuild/RPMS /opt/build-dir
+cp -r ~/rpmbuild/SRPMS /opt/build-dir
