@@ -57,7 +57,7 @@ popd
 popd
 }
 function compilecryptopp(){
-appveyor DownloadFile "http://downloads.sourceforge.net/project/cryptopp/cryptopp/5.6.4/cryptopp564.zip?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fcryptopp%2F%3Fsource%3Dtyp_redirect&ts=1474246354&use_mirror=pilotfiber"
+appveyor DownloadFile "https://www.cryptopp.com/cryptopp564.zip"
 7z.exe x -ocryptopp564 cryptopp564.zip
 pushd cryptopp564
 mkdir build
