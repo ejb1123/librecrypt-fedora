@@ -31,6 +31,14 @@ if(!(Test-Path ".\jom")) {
 }
 $env:Path += ";"+ $(Resolve-Path .\jom\)
 }
+function compilesparkle(){
+$WebClient = New-Object System.Net.WebClient
+$WebClient.DownloadFile("https://github.com/vslavik/winsparkle/releases/download/v0.5.2/WinSparkle-0.5.2-src.7z","$pwd\WinSparkle-0.5.2-src.7z")
+& 7z x WinSparkle-0.5.2-src.7z
+pushd WinSparkle-0.5.2-src
+msbuild WinSparkle-2015.sln /property:Configuration=Release /property:Platform=x64 /m
+popd
+}
 function compileProtobuf(){
 $WebClient = New-Object System.Net.WebClient
 $WebClient.DownloadFile("https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip","$pwd\protobuf-cpp-3.0.0.zip")
