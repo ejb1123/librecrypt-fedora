@@ -52,6 +52,7 @@ pushd  Release
 cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release ../..
 jom -J 16
 jom install
+$env:Path += ";"+ "C:\Program Files (x86)\protobuf\bin"
 popd
 popd
 popd
