@@ -1,5 +1,6 @@
 FROM fedora:24
 RUN dnf install -y gcc gcc-c++ rpm-build rpmdevtools dnf-plugins-core make cpp git bc
+dnf install git cmake binutils fuse glibc-devel glib2-devel fuse-devel gcc zlib-devel libpng12 # Fedora, RHEL, CentOS
 RUN mkdir /opt/build-dir
 #VOLUME /opt/build-dir
 WORKDIR /opt/build-dir
@@ -8,4 +9,4 @@ WORKDIR /opt/build-dir
 #RUN git submodule update --init
 #RUN mkdir docker-build
 #COPY ./ docker-build/
-ENTRYPOINT docker-build/makerpm.sh
+ENTRYPOINT docker-build/makeappimage.sh
