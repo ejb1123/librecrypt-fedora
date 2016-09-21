@@ -15,5 +15,5 @@ cd ~/rpmbuild/SPECS/
 dnf copr enable -y ejb1123/protobuf
 dnf builddep -y librevault.spec
 rpmbuild -ba --define="VERSION $VERSION" librevault.spec
-cp -r ~/rpmbuild/RPMS /opt/build-dir
-cp -r ~/rpmbuild/SRPMS /opt/build-dir
+cp -r ~/rpmbuild/RPMS /opt/build-dir/librevault
+cp -r ~/rpmbuild/SRPMS /opt/build-dir/librevault
