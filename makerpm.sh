@@ -1,6 +1,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
 export VERSION=$(echo $(git describe) | cut -d'v' -f 2)
+echo $VERSION
 cd $DIR
 rpmdev-setuptree
 tar -czvf librevault-v$version.tar.gz $DIR/../../librevault
