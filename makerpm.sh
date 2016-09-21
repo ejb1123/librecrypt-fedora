@@ -4,6 +4,9 @@ export VERSION=$(echo $(git describe) | cut -d'v' -f 2)
 echo $VERSION
 cd $DIR
 rpmdev-setuptree
+ls .
+ls ..
+ls ../..
 tar -czvf librevault-v$version.tar.gz $DIR/../../librevault
 cp librevault.spec ~/rpmbuild/SPECS/
 cp memory.patch librevault-v$version.tar.gz ~/rpmbuild/SOURCES/
