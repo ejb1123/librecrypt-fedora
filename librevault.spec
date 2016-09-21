@@ -1,5 +1,5 @@
 Name:		librevault
-Version:	%{VERSION}
+Version:	0.1.18.11
 Release:	1%{?dist}
 Summary:	Peer-to-peer, decentralized and open source file sync
 
