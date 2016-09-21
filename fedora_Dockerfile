@@ -4,7 +4,8 @@ RUN mkdir /opt/build-dir
 #VOLUME /opt/build-dir
 WORKDIR /opt/build-dir
 #RUN git clone https://github.com/Librevault/librevault.git && echo 'ls -a librevault' && ls librevault
-#WORKDIR librevault
+RUN mkdir librevault
+WORKDIR librevault
 #RUN git submodule update --init
 #RUN mkdir docker-build
 #COPY ./ docker-build/
