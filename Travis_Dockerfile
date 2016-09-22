@@ -8,4 +8,5 @@ RUN git submodule update --init
 RUN mkdir docker-build
 WORKDIR docker-build
 COPY ./ .
+RUN la -a && pwd
 ENTRYPOINT docker-build/makerpm.sh
