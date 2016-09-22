@@ -1,6 +1,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/..
-export VERSION=$(echo $(git describe) | cut -d'v' -f 2)
+export VERSION=$(echo $(git describe |cut -d 'v' -f 2 | cut -d '-' -f1))
 echo $VERSION
 cd $DIR
 rpmdev-setuptree
