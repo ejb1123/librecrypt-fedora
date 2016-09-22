@@ -10,4 +10,4 @@ WORKDIR docker-build
 COPY ./ .
 RUN ls -a && pwd
 RUN chmod +x makerpm.sh
-ENTRYPOINT makerpm.sh
+CMD sh makerpm.sh
