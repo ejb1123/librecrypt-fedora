@@ -9,4 +9,5 @@ RUN git submodule update --init
 RUN mkdir docker-build
 WORKDIR docker-build
 COPY ./ .
+RUN ls -a
 ENTRYPOINT makerpm.sh
