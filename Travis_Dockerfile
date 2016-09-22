@@ -7,5 +7,6 @@ RUN git clone https://github.com/Librevault/librevault.git && echo 'ls -a librev
 WORKDIR librevault
 RUN git submodule update --init
 RUN mkdir docker-build
-COPY ./ docker-build/
-ENTRYPOINT docker-build/makerpm.sh
+WORKDIR docker-build
+COPY ./ .
+ENTRYPOINT makerpm.sh
