@@ -8,6 +8,7 @@ ls .
 ls ..
 ls ../..
 tar -czvf librevault-v$VERSION.tar.gz $DIR/../../librevault
+echo "$(perl -p -i -e 's/\$\{([^}]+)\}/defined $ENV{$1} ? $ENV{$1} : $&/eg' < librevault-fedora.tpl)" > librevault.spec
 cp librevault.spec ~/rpmbuild/SPECS/
 cp memory.patch librevault-v$VERSION.tar.gz ~/rpmbuild/SOURCES/
 echo -e "%_topdir %(echo $HOME)/rpmbuild\n%__make /usr/bin/make -j$(echo "$(nproc) + $(nproc)/2" | bc)" > ~/.rpmmacros
