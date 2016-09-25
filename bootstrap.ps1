@@ -1,24 +1,60 @@
-mkdir -force tmp
+
 #$hh = Get-WmiObject -Class Win32_Processor -ComputerName . | Select-Object -Property NumberOfLogicalProcessors
-cd tmp
-
-
-
+#cd tmp
+$currentDir=$pwd
+mkdir deps -force
+$perl=$false
+$git=$false
 Import-Module BitsTransfer
 $sparkledir=""
+function checkForCommands(){
+"Checking for Programs"
+if(Get-Command git){
+"have git"
+$git=$true
+}else{
+$git=$false
+"You Need git;"}
+
+
+if(Get-Command -ErrorAction SilentlyContinue perl){
+"have perl"
+$perl=$true
+}else{
+$perl=$false
+"You Need perl"}
+if($env:QT){
+"you have Qt"
+}
+else{
+"you need Qt"
+}}
+
+function installMissing(){
+if(-Not(Get-Command -ErrorAction Continue choco )){
+"installing chocolaty"
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+}
+if(!$perl){
+cinst -y strawberryperl --allow-empty-checksums
+}
+}
 
 function compileQT(){
   if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0.7z")) {
-  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/archive/qt/5.7/5.7.0/single/qt-everywhere-opensource-src-5.7.0.7z" -Destination "qt-everywhere-opensource-src-5.7.0.7z"
-  & 7z x qt-everywhere-opensource-src-5.7.0.7z
+  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_57/qt.57.win32_msvc2015/5.7.0-1qtwebsockets-Windows-Windows_10-MSVC2015-Windows-Windows_10-X86.7z"
+  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_57/qt.57.win32_msvc2015/5.7.0-1qttools-Windows-Windows_10-MSVC2015-Windows-Windows_10-X86.7z"
+  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_57/qt.57.win32_msvc2015/5.7.0-1qtsvg-Windows-Windows_10-MSVC2015-Windows-Windows_10-X86.7z"
+  Start-BitsTransfer -Priority Foreground -source "http://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_57/qt.57.win32_msvc2015/5.7.0-1qtbase-Windows-Windows_10-MSVC2015-Windows-Windows_10-X86.7z"
+
+  
+  #& 7z x qt*.7z
 }
-if(!(Test-Path ".\qt-everywhere-opensource-src-5.7.0")) {
-  & 7z x qt-everywhere-opensource-src-5.7.0.7z
-}
-cd qt-everywhere-opensource-src-5.7.0
-"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
-& .\configure.bat -opensource -platform win32-msvc2015 -release -confirm-license -prefix $PWD/qtbase
-jom -j 16
+
+
+#"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
+#& .\configure.bat -opensource -platform win32-msvc2015 -MP -release -confirm-license -prefix C:\qtopen
+#jom -j 16
 }
 
 function compileJOM(){
@@ -43,32 +79,34 @@ popd
 function compileProtobuf(){
 $WebClient = New-Object System.Net.WebClient
 $WebClient.DownloadFile("https://github.com/google/protobuf/releases/download/v3.0.0/protobuf-cpp-3.0.0.zip","$pwd\protobuf-cpp-3.0.0.zip")
-& 7z.exe x protobuf-cpp-3.0.0.zip
+& 7z.exe x -y protobuf-cpp-3.0.0.zip
 pushd protobuf-3.0.0\cmake
 mkdir build
 pushd build
 mkdir Release
 pushd  Release
-cmake -G "NMake Makefiles JOM" -DCMAKE_BUILD_TYPE=Release ../..
-jom -J 16
-jom install
+mkdir $currentDir\deps\protobuf
+cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="$(Resolve-Path $currentDir\deps\protobuf)" -Wno-dev -DCMAKE_BUILD_TYPE=Release ..\..
+cmake --build .
+cmake --build . -- install
 $env:Path += ";"+ "C:\Program Files (x86)\protobuf\bin"
 popd
 popd
 popd
 }
 function compilecryptopp(){
-appveyor DownloadFile "https://www.cryptopp.com/cryptopp564.zip"
-7z.exe x -ocryptopp564 cryptopp564.zip
+Start-BitsTransfer -source "https://www.cryptopp.com/cryptopp564.zip" -Destination "cryptopp564.zip"
+7z.exe x -y -ocryptopp564 cryptopp564.zip
 pushd cryptopp564
 mkdir build
 pushd build
-mkdir release
+mkdir -Force release
 pushd release
-cmake -G "NMake Makefiles JOM" -DCMAKE_RELEASE_TYPE=release ..\..
-cmake --build . -- -j 16
+mkdir $currentDir\deps\cryptopp
+cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="$(Resolve-Path $currentDir\deps\cryptopp)" ..\..
+cmake --build .
 cmake --build . -- test
-nmake install
+cmake --build . -- install
 popd
 popd
 popd
@@ -85,19 +123,26 @@ cmake --build .
 }
 function setupVSudio(){
 #Set environment variables for Visual Studio Command Prompt
-pushd "$env:VS140COMNTOOLS"
-cmd /c "vsvars32.bat&set" |
+pushd "$env:VS140COMNTOOLS\..\..\VC"
+cmd /c "vcvarsall.bat&set" |
 foreach {
   if ($_ -match "=") {
     $v = $_.split("="); set-item -force -path "ENV:\$($v[0])"  -value "$($v[1])"
   }
 }
 popd
+cd $currentDir
 write-host '`nVisual Studio 2015 Command Prompt variables set.' -ForegroundColor Yellow
 }
+mkdir -force -ErrorAction SilentlyContinue tmp
+pushd tmp
+#checkForCommands
+#installMissing
 setupVSudio
-compileJOM
+#compileJOM
+#compileQT
 compilecryptopp
 compileProtobuf
 compilesparkle
 compilemain
+popd tmp
